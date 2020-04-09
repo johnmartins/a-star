@@ -1,4 +1,6 @@
-let grid = new Grid("grid-container", 30)
+'use strict'
+
+let grid = new Grid("grid-container", 50)
 
 let interactionType = "obstacle"
 GlobalObserver.subscribe("selection-type", (type) => {

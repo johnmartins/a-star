@@ -14,7 +14,6 @@ function djikstra (nodes, origin, target) {
         }
 
         let distance = Math.sqrt(Math.pow(target.x - node.x, 2) + Math.pow(target.y - node.y, 2))
-        console.log(distance)
         weightMap[node.getKey()] = distance
         // node.color = `rgb(${distance*8},0,0)`
     }
@@ -27,6 +26,7 @@ function djikstra (nodes, origin, target) {
     // Setup starting conditions
     pq.add(origin)
     visitedNodesMap[origin.getKey()] = origin
+    let pathFound = false
 
     let cycles = 0
     while (pq.isEmpty() === false) {
@@ -36,6 +36,7 @@ function djikstra (nodes, origin, target) {
         // Are we there yet?
         if (currentNode === target) {
             console.log("FOUND THE TARGET")
+            pathFound = true
             break
         }
 
@@ -62,6 +63,8 @@ function djikstra (nodes, origin, target) {
     }
     console.log(`Problem solved in ${cycles} cycles`)
     
+    if (!pathFound) return
+    
     let traceBackNode = target
     while(traceBackNode.getKey() !== origin.getKey()) {
         if (traceBackNode.getKey() !== target.getKey()) {
@@ -69,6 +72,4 @@ function djikstra (nodes, origin, target) {
         }
         traceBackNode = visitedNodesMap[traceBackNode.getKey()]
     }
-    
-    
 }
