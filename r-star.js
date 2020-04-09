@@ -51,7 +51,7 @@ function djikstra (nodes, origin, target) {
             if (neighbour.getAttribute("isObstacle") === true) continue
             // element has already been explored. Skip.
             if (visitedNodesMap[neighbour.getKey()]) continue
-            //weightMap[neighbour.getKey()] = weightMap[neighbour.getKey()] + weightMap[currentNode.getKey()]
+            // TODO: Add weight to penalize less efficient routes
             
             // If neighbour does not exist in map, then the current node is the fastest way to get there.
             visitedNodesMap[neighbour.getKey()] = currentNode
