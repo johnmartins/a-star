@@ -2,6 +2,7 @@
 
 class PriorityQueue {
     constructor () {
+        this.valueFunction = null
         this.stack = []
     }
 
@@ -36,12 +37,12 @@ class PriorityQueue {
     }
 
     adjustHierarchyTopDown (index) {
-        let topValue = this.stack[index]
+        let topValue = this.getValueOfElement(index)
         if (this.getLeftIndex(index)) {
-            let leftValue = this.stack[this.getLeftIndex(index)]
+            let leftValue = this.getValueOfElement(this.getLeftIndex(index))
             // If it also has a right child
             if (this.getRightIndex(index)) {
-                let rightValue = this.stack[this.getRightIndex(index)]
+                let rightValue = this.getValueOfElement(this.getRightIndex(index))
 
                 if (leftValue >= rightValue) {
                     if (rightValue >= topValue) return // Dont shift if top is lower
@@ -70,8 +71,9 @@ class PriorityQueue {
     adjustHierarchyBottomUp (index) {
         if (index == 0) return
 
-        let valueIndex = this.stack[index]
-        let valueTop = this.stack[this.getTopIndex(index)]
+        let valueIndex = this.getValueOfElement(index)
+        let valueTop = this.getValueOfElement(this.getTopIndex(index))
+        console.log(`vi = ${valueIndex}, vt = ${valueTop}`)
 
         if (valueTop > valueIndex) {
             this.shiftUp(index)
@@ -112,13 +114,11 @@ class PriorityQueue {
 
     shiftUp (index) {
         if (index == 0) return
-        let valueTop = this.stack[this.getTopIndex(index)]
-        let valueIndex = this.stack[index]
+        let elementTop = this.stack[this.getTopIndex(index)]
+        let elementIndex = this.stack[index]
 
-        if (valueTop > valueIndex) {
-            this.stack[this.getTopIndex(index)] = valueIndex
-            this.stack[index] = valueTop
-        }
+        this.stack[this.getTopIndex(index)] = elementIndex
+        this.stack[index] = elementTop
 
         return
     }
@@ -131,13 +131,32 @@ class PriorityQueue {
         }
         return str += "]"
     }
+
+    getValueOfElement (index) {
+        if (this.valueFunction) {
+            return this.valueFunction(this.stack[index])
+        }
+        return this.stack[index]
+    }
+
+    setValueFunction (fn) {
+        this.valueFunction = fn
+    }
 }
 
 /*
 let pq = new PriorityQueue()
+
+pq.setValueFunction((item) => {
+    return item
+})
+
 pq.add(7)
+console.log(pq.toString())
 pq.add(99)
+console.log(pq.toString())
 pq.add(2)
+console.log(pq.toString())
 pq.add(33)
 pq.add(3)
 pq.add(8)
@@ -148,8 +167,6 @@ pq.add(100)
 console.log(pq.toString())
 
 while (pq.isEmpty() == false) {
-    console.log(pq.toString())
     console.log(pq.pop())
 }
-
 */
