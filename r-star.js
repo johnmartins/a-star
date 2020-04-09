@@ -14,6 +14,7 @@ function djikstra (nodes, origin, target) {
         }
 
         let distance = Math.sqrt(Math.pow(target.x - node.x, 2) + Math.pow(target.y - node.y, 2))
+        console.log(distance)
         weightMap[node.getKey()] = distance
         // node.color = `rgb(${distance*8},0,0)`
     }
@@ -51,8 +52,7 @@ function djikstra (nodes, origin, target) {
             if (neighbour.getAttribute("isObstacle") === true) continue
             // element has already been explored. Skip.
             if (visitedNodesMap[neighbour.getKey()]) continue
-            // TODO: Add weight to penalize less efficient routes
-            
+            weightMap[neighbour.getKey()] = weightMap[neighbour.getKey()] + weightMap[currentNode.getKey()] 
             // If neighbour does not exist in map, then the current node is the fastest way to get there.
             visitedNodesMap[neighbour.getKey()] = currentNode
             pq.add(neighbour)
