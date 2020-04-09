@@ -139,34 +139,11 @@ class PriorityQueue {
         return this.stack[index]
     }
 
+    /**
+     * Inject a value function to sort any generic object. The value function has one argument, which is the item in question.
+     * @param {Function} fn 
+     */
     setValueFunction (fn) {
         this.valueFunction = fn
     }
 }
-
-/*
-let pq = new PriorityQueue()
-
-pq.setValueFunction((item) => {
-    return item
-})
-
-pq.add(7)
-console.log(pq.toString())
-pq.add(99)
-console.log(pq.toString())
-pq.add(2)
-console.log(pq.toString())
-pq.add(33)
-pq.add(3)
-pq.add(8)
-pq.add(53)
-pq.add(0)
-pq.add(100)
-
-console.log(pq.toString())
-
-while (pq.isEmpty() == false) {
-    console.log(pq.pop())
-}
-*/

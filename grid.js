@@ -247,6 +247,10 @@ class GridElement {
         this.attributes[name] = value
     }
 
+    getAttribute(name) {
+        return this.attributes[name]
+    }
+
     /**
      * Draws this element on the grid
      */
@@ -267,43 +271,11 @@ class GridElement {
         console.log(neighbours)
         return neighbours
     }
-}
 
-let grid = new Grid("grid-container", 30)
-
-let interactionType = "obstacle"
-GlobalObserver.subscribe("selection-type", (type) => {
-    interactionType = type
-})
-
-grid.addElementSelectionListener((el) => {
-    // Handle interaction types
-    if (!interactionType) return // No type -> do nothing
-
-    el.getNeighbours()
-
-    if (interactionType == "pathfinder") {
-        el.color = "lime"
-    } else if (interactionType == "target") {
-        el.color = "red"
+    /**
+     * Solid programming right here
+     */
+    getKey () {
+        return `${this.x},${this.y}`
     }
-
-    if (interactionType == "obstacle") {
-        el.color = "gainsboro"
-    } else {
-        // If the type is anything other than obstacle, then dont allow the user to drag
-        GlobalObserver.fire("selection-type", null)
-    }
-})
-
-GlobalObserver.subscribe("clear-grid", () => {
-    grid.clear()
-})
-
-// GUI draw loop
-let drawGUI = () => {
-    grid.draw()
-    window.requestAnimationFrame(drawGUI)
 }
-
-drawGUI();
