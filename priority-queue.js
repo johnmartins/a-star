@@ -73,7 +73,6 @@ class PriorityQueue {
 
         let valueIndex = this.getValueOfElement(index)
         let valueTop = this.getValueOfElement(this.getTopIndex(index))
-        console.log(`vi = ${valueIndex}, vt = ${valueTop}`)
 
         if (valueTop > valueIndex) {
             this.shiftUp(index)

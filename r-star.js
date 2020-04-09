@@ -23,13 +23,14 @@ function djikstra (nodes, origin, target) {
         return weightMap[gridElement.getKey()]
     })
 
+    // Setup starting conditions
     pq.add(origin)
+    visitedNodesMap[origin.getKey()] = origin
+
     let cycles = 0
     while (pq.isEmpty() === false) {
-        cycles++
+        
         let currentNode = pq.pop()
-        currentNode.color = "cyan"
-        console.log(`cycles: ${cycles}. Currently at: (${currentNode.x}, ${currentNode.y})`)
 
         // Are we there yet?
         if (currentNode === target) {
@@ -37,28 +38,37 @@ function djikstra (nodes, origin, target) {
             break
         }
 
+        if (cycles !== 0) currentNode.color = "cyan"
+
         // Add neighbours
         let neighbourArray = currentNode.getNeighbours()
         for (let i = 0; i < neighbourArray.length; i++) {
             let neighbour = neighbourArray[i]
-            if (!neighbour) continue // neighbours are set to null if outside domain
+
+            // neighbours are set to null if edge of domain. Skip.
+            if (!neighbour) continue 
+            // obstacles can't be visited. Skip.
             if (neighbour.getAttribute("isObstacle") === true) continue
-
-            if (visitedNodesMap[neighbour.getKey()]) {
-                console.log(`Neighbour (${neighbour.x}, ${neighbour.y}) already logged`)
-                console.log(visitedNodesMap[neighbour.getKey()])
-                continue
-            }
-
+            // element has already been explored. Skip.
+            if (visitedNodesMap[neighbour.getKey()]) continue
+            //weightMap[neighbour.getKey()] = weightMap[neighbour.getKey()] + weightMap[currentNode.getKey()]
+            
             // If neighbour does not exist in map, then the current node is the fastest way to get there.
             visitedNodesMap[neighbour.getKey()] = currentNode
             pq.add(neighbour)
         }
         
+        cycles++
+    }
+    console.log(`Problem solved in ${cycles} cycles`)
+    
+    let traceBackNode = target
+    while(traceBackNode.getKey() !== origin.getKey()) {
+        if (traceBackNode.getKey() !== target.getKey()) {
+            traceBackNode.color = "purple"
+        }
+        traceBackNode = visitedNodesMap[traceBackNode.getKey()]
     }
     
-
-    let distance = []
-
     
 }

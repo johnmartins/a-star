@@ -268,7 +268,6 @@ class GridElement {
      */
     getNeighbours () {
         let neighbours = GridElement.grid.getElementNeighbours(this)
-        console.log(neighbours)
         return neighbours
     }
 
