@@ -9,7 +9,8 @@ function djikstra (nodes, origin, target) {
     for (let i = 0; i < nodes.length; i++) {
         let node = nodes[i]
 
-        let weight = Math.sqrt(Math.pow(target.x - node.x, 2) + Math.pow(target.y - node.y, 2))
+        let weight = Math.sqrt(Math.pow(target.x - node.x, 2) + Math.pow(target.y - node.y, 2)) // The least distance formula is bad here since it can only move in 4 predefined directions
+        //let weight = Math.abs(target.x - node.x) + Math.abs(target.y - node.y) // Does not look as good, but is actually better
         weightMap[node.getKey()] = weight
         distanceMap[node.getKey()] = 0
         // node.color = `rgb(${distance*8},0,0)`
@@ -37,7 +38,10 @@ function djikstra (nodes, origin, target) {
             break
         }
 
-        if (cycles !== 0) currentNode.color = "cyan"
+        if (cycles !== 0) {
+            currentNode.color = "DarkSlateGray"
+            currentNode.setAttribute("visited", true)
+        } 
 
         // Add neighbours
         let neighbourArray = currentNode.getNeighbours()
@@ -69,7 +73,7 @@ function djikstra (nodes, origin, target) {
     let traceBackNode = target
     while(traceBackNode.getKey() !== origin.getKey()) {
         if (traceBackNode.getKey() !== target.getKey()) {
-            traceBackNode.color = "purple"
+            traceBackNode.color = "magenta"
         }
         traceBackNode = visitedNodesMap[traceBackNode.getKey()]
     }

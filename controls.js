@@ -15,6 +15,16 @@ btnTarget.onclick = () => {
     GlobalObserver.fire("selection-type", "target")
 }
 
+let btnErasor = document.getElementById("btn-erasor")
+btnErasor.onclick = () => {
+    GlobalObserver.fire("selection-type", "erasor")
+}
+
+let btnClearTraces = document.getElementById("btn-clear-traces")
+btnClearTraces.onclick = () => {
+    GlobalObserver.fire("clear-traces")
+}
+
 let btnClear = document.getElementById("btn-clear")
 btnClear.onclick = () => {
     GlobalObserver.fire("clear-grid")
@@ -22,5 +32,6 @@ btnClear.onclick = () => {
 
 let btnRun = document.getElementById("btn-run")
 btnRun.onclick = () => {
+    GlobalObserver.fire("clear-traces")
     GlobalObserver.fire("run")
 }

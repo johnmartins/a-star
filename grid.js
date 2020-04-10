@@ -1,7 +1,7 @@
 'use strict'
 
 class Grid {
-    static resWidth = 600   // px
+    static resWidth = 800   // px
 
     constructor (container, n) {
         console.log(`Instanciated a grid in ${container} ${n}x${n}`)
